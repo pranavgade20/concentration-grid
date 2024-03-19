@@ -3,10 +3,12 @@
 <head>
     <title>Concentration Grid</title>
     <style>
+        :root {
+            --font-scale: 0.0;
+        }
         table, th, td {
             border: 1px solid black;
             border-collapse: collapse;
-            --font-scale: 1.0;
         }
 
         table {
@@ -76,6 +78,7 @@
 
                 if (!started) {
                     started = true;
+                    document.querySelector(':root').style.setProperty('--font-scale', "1.0");
                     start_timer();
                 }
                 if (parseInt(elem.innerHTML) === count) {
