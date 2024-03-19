@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+<head>
+    <title>Concentration Grid</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            --font-scale: 1.0;
+        }
+
+        table {
+            --scale: 1.0;
+            width: calc(80vmin * var(--scale));
+            height: calc(80vmin * var(--scale));
+            table-layout: fixed;
+            margin: auto;
+        }
+
+        td {
+            width: 10%;
+            height: 10%;
+            font-size: calc((1vw + 1vh) * var(--font-scale));
+            text-align: center;
+            vertical-align: middle;
+        }
+
+    </style>
+     <script>
+            function zeroPad(num, places) {
+                var zero = places - num.toString().length + 1;
+                return Array(+(zero > 0 && zero)).join("0") + num;
+            }
+            let started = false;
+            let timer_id;
+            let start;
+            function start_timer() {
+                let time_spent = document.getElementById("time-spent");
+                start = Date.now();
+                timer_id = setInterval(function () {
+                    let delta = Date.now() - start;
+                    let seconds = Math.floor(delta / 1000);
+                    let minutes = Math.floor(seconds / 60);
+                    seconds = seconds % 60;
+                    if (seconds < 10) {
+                        seconds = "0" + seconds;
+                    }
+                    if (minutes < 10) {
+                        minutes = "0" + minutes;
+                    }
+                    time_spent.innerHTML = minutes + ":" + seconds;
+                }, 1000);
+            }
+
+            function sumbit_score(start_time, end_time) {
+                let form = document.createElement('form');
+                form.style.display = 'none';
+                form.method = 'post';
+                form.action = '/submit';
+                let input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'start_time';
+                input.value = start_time;
+                form.appendChild(input);
+                input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'end_time';
+                input.value = end_time;
+                form.appendChild(input);
+                document.body.appendChild(form);
+                form.submit();
+            }
+            count = 0;
+            function cell_clicked(elem) {
+                let end = Date.now();
+
+                if (!started) {
+                    started = true;
+                    start_timer();
+                }
+                if (parseInt(elem.innerHTML) === count) {
+                    elem.style.backgroundColor = "gray";
+                    elem.style.color = "darkgray";
+                    count++;
+                } else if (parseInt(elem.innerHTML) > count) {
+                    elem.style.backgroundColor = "red";
+                    // transition back to original color
+                    setTimeout(function () {
+                        elem.style.transition = "background-color 1s";
+                        elem.style.backgroundColor = "white";
+                    }, 1);
+                    setTimeout(function () {
+                        elem.style.transition = "";
+                    }, 1000);
+                }
+                if (count === 100) {
+                    clearInterval(timer_id);
+                    let delta = end - start;
+
+                    let seconds = Math.floor(delta / 1000);
+                    let minutes = Math.floor(seconds / 60);
+                    seconds = seconds % 60;
+                    if (seconds < 10) {
+                        seconds = "0" + seconds;
+                    }
+                    if (minutes < 10) {
+                        minutes = "0" + minutes;
+                    }
+                    let time_formatted = minutes + ":" + seconds + "." + zeroPad(delta % 1000, 3);
+                    time_div = document.getElementById("time");
+                    time_div.innerHTML = "<h4 style='text-align: center'> You finished the grid in " + time_formatted + " - <a onclick='sumbit_score(" + start + ", " + end + ")' style='color: blue'>click here</a> to save your score</h4>";
+                }
+            }
+
+    </script>
+</head>
+<body>
+<div id="grid">
+    <table>
+        {% for row in grid %}
+            <tr>
+                {% for cell in row %}
+                    <td onclick="cell_clicked(this)">{{ cell }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+<br>
+<div id="time">
+    <h2 style="text-align: center">Time: <span id="time-spent">Click anywhere in the grid to start</span></h2>
+</div>
+</body>
+</html>
