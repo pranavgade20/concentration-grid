@@ -78,8 +78,9 @@
 
                 if (!started) {
                     started = true;
-                    document.querySelector(':root').style.setProperty('--font-scale', "1.0");
+                    document.querySelector(':root').style.setProperty('--font-scale', "1.5");
                     start_timer();
+                    return;
                 }
                 if (parseInt(elem.innerHTML) === count) {
                     elem.style.backgroundColor = "gray";
