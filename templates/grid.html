@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Concentration Grid</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         :root {
             --font-scale: 0.0;
@@ -25,6 +26,15 @@
             font-size: calc((1vw + 1vh) * var(--font-scale));
             text-align: center;
             vertical-align: middle;
+        }
+        footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: lightgray;
+            color: black;
+            text-align: center;
         }
 
     </style>
@@ -135,4 +145,14 @@
     <h2 style="text-align: center">Time: <span id="time-spent">Click anywhere in the grid to start</span></h2>
 </div>
 </body>
+<footer>
+    <table style="border-collapse: initial; width: 100%; height: fit-content; border: initial">
+        <tr style="display: grid; grid-auto-flow: column">
+            <td style="border: initial; padding: 1em; text-align: center; font-size: initial"><a href="/">Home</a></td>
+            <td style="border: initial; padding: 1em; text-align: center; font-size: initial"><a href="/grid">Grid</a></td>
+            <td style="border: initial; padding: 1em; text-align: center; font-size: initial"><a href="/leaderboard">Leaderboard</a></td>
+            <td style="border: initial; padding: 1em; text-align: center; font-size: initial"><a href="/auth/logout">Logout</a></td>
+        </tr>
+    </table>
+</footer>
 </html>

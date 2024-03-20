@@ -128,7 +128,7 @@ def leaderboard():
     leaderboard['user'] = leaderboard['user'].apply(lambda x: x[:5] + '***' + x[-1:] if len(x) > 6 else x[:-2] + '***')
     leaderboard = leaderboard.to_dict(orient='index')
     leaderboard = [leaderboard[i] for i in range(len(leaderboard))]
-    return flask.render_template('leaderboard.html', leaderboard=leaderboard)
+    return flask.render_template('leaderboard.html', leaderboard=reversed(leaderboard))
 
 @app.route('/history')
 @login_required

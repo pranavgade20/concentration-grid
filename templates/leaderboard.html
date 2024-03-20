@@ -28,14 +28,26 @@
         table#t01 th {
             background-color: #f1f1c1;
         }
+
+        footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: lightgray;
+            color: black;
+            text-align: center;
+        }
+
     </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 <table>
     <tr>
         <th>User</th>
         <th>Date</th>
-        <th>Score</th>
+        <th>Time</th>
     </tr>
     {% for row in leaderboard %}
     <tr>
@@ -45,4 +57,14 @@
     {% endfor %}
 </table>
 </body>
+<footer>
+    <table style="border-collapse: initial; width: 100%; height: fit-content; border: initial">
+        <tr style="display: grid; grid-auto-flow: column">
+            <td style="border: initial; padding: 1em; text-align: center; font-size: initial"><a href="/">Home</a></td>
+            <td style="border: initial; padding: 1em; text-align: center; font-size: initial"><a href="/grid">Grid</a></td>
+            <td style="border: initial; padding: 1em; text-align: center; font-size: initial"><a href="/leaderboard">Leaderboard</a></td>
+            <td style="border: initial; padding: 1em; text-align: center; font-size: initial"><a href="/auth/logout">Logout</a></td>
+        </tr>
+    </table>
+</footer>
 </html>
